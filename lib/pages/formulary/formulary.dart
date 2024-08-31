@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:project_google_sheet/model/FeedbackForm.dart';
+import 'package:project_google_sheet/service/google_sheet_service.dart';
+import 'package:project_google_sheet/utils/message_utils.dart';
 
-class Formulary extends StatelessWidget {
-  final GlobalKey<FormState> formKey;
-  final void Function() onSubmit;
-  final TextEditingController nameController;
-  final TextEditingController emailController;
-  final TextEditingController mobileNumberController;
-  final TextEditingController feedBackController;
+class Formulary extends StatefulWidget {
+  const Formulary({super.key});
 
-  const Formulary({
-    super.key,
-    required this.formKey,
-    required this.onSubmit,
-    required this.nameController,
-    required this.emailController,
-    required this.mobileNumberController,
-    required this.feedBackController,
-  });
+  @override
+  State<Formulary> createState() => _FormularyState();
+}
+
+class _FormularyState extends State<Formulary> {
+  final _formKey = GlobalKey<FormState>();
+
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final mobileNumberController = TextEditingController();
+  final feedBackController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50.0),
       child: Form(
-        key: formKey,
+        key: _formKey,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -69,5 +69,32 @@ class Formulary extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> onSubmit() async {
+    if (_formKey.currentState!.validate()) {
+      final feedBack = FeedbackForm(
+        name: nameController.text,
+        email: emailController.text,
+        mobile_number: mobileNumberController.text,
+        feedBack: feedBackController.text,
+      );
+
+      final sheet = GoogleSheetService((String response) {
+        if (response == GoogleSheetService.STATUS_SUCCESS) {
+          MessageUtils.showSnackMessage(context, "Feedbback Submited");
+          nameController.text = '';
+          emailController.text = '';
+          mobileNumberController.text = '';
+          feedBackController.text = '';
+          setState(() {});
+
+        } else {
+          MessageUtils.modalError(context, "Error!");
+        }
+      });
+
+      await sheet.submitForm(feedBack);
+    }
   }
 }
