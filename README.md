@@ -2,7 +2,9 @@
 This project is to learn how save and get data in google sheets
 
 
-# In google sheet codes use this:
+# In google sheet codes use this (this method only save new data) (V1):
+> await http.get(URL + '?name=$name&email=$email&mobileNumber=$mobile_number&feedback=$feedBack');
+
   ```
 function doGet(request) {
   var sheet = SpreadsheetApp.openById("YOUR_GOOGLE_SHEET_ID_HERE");
