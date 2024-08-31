@@ -52,11 +52,6 @@ function onSave(request, sheetId) {
     var mobileNumber = request.parameter.mobileNumber;
     var feedback = request.parameter.feedback;
 
-    if (name && email && mobileNumber && feedback) {
-      sheet.appendRow([name, email, mobileNumber, feedback]);
-      result = {"status": "SUCCESS"};
-    }
-
     var rowData = sheet.appendRow([name, email, mobileNumber, feedback]);
 
     result = {"status": "SUCCESS"};
