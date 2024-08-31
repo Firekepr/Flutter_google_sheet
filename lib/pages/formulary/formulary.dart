@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_google_sheet/model/FeedbackForm.dart';
 import 'package:project_google_sheet/service/google_sheet_service.dart';
@@ -17,6 +18,8 @@ class _FormularyState extends State<Formulary> {
   final emailController = TextEditingController();
   final mobileNumberController = TextEditingController();
   final feedBackController = TextEditingController();
+  
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +67,13 @@ class _FormularyState extends State<Formulary> {
               ),
             ),
 
-            ElevatedButton(onPressed: onSubmit, child: const Text('Save')),
+            Opacity(
+              opacity: loading ? 0.5 : 1,
+              child: ElevatedButton(
+                onPressed: loading ? null : onSubmit,
+                child: const Text('Save'),
+              ),
+            ),
           ],
         ),
       ),
@@ -73,6 +82,8 @@ class _FormularyState extends State<Formulary> {
 
   Future<void> onSubmit() async {
     if (_formKey.currentState!.validate()) {
+      setState(() => loading = true);
+
       final feedBack = FeedbackForm(
         name: nameController.text,
         email: emailController.text,
@@ -95,6 +106,7 @@ class _FormularyState extends State<Formulary> {
       });
 
       await sheet.submitForm(feedBack);
+      setState(() => loading = false);
     }
   }
 }
