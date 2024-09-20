@@ -22,6 +22,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: const Text('Flutter google sheets'),
       ),
       body: PageView(
+        physics: const NeverScrollableScrollPhysics(),
         controller: controller,
         children: const [
           Formulary(),
