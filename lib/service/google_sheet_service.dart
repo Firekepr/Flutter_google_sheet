@@ -13,11 +13,29 @@ class GoogleSheetService {
 
   Future<void> submitForm(FeedbackForm feedback) async {
      try {
-       final response = await http.get(Uri.parse(URL + feedback.toParams()));
+       final response = await http.get(Uri.parse('$URL${feedback.toParams()}&action=save'));
 
        callBack(jsonDecode(response.body)['status']);
      } catch (e) {
        print(e);
      }
+  }
+
+  Future<List<FeedbackForm>> getDataFromGoogleSheet() async {
+    List<FeedbackForm> response = [];
+
+    final request = await http.get(Uri.parse('$URL?action=get'));
+
+    callBack(jsonDecode(request.body)['status']);
+
+    if (jsonDecode(request.body)['status'] != STATUS_SUCCESS) return response;
+
+    List<dynamic> mapItems = jsonDecode(request.body)['data'];
+
+    for (int i = 1; i < mapItems.length; i++) {
+      response.add(FeedbackForm.fromMap(mapItems[i]));
+    }
+
+    return response;
   }
 }
