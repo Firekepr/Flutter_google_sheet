@@ -33,6 +33,7 @@ class _FormularyListState extends State<FormularyList> {
               child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: forms.length,
+                padding: const EdgeInsets.only(top: 4.0),
                 itemBuilder: (context, int idx) => FormularyListItem(item: forms[idx], idx: idx),
               ),
           ),
