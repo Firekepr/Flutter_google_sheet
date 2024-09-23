@@ -13,8 +13,8 @@ class NavigatorBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final labels = ['Insert', 'Consult'];
-    final iconList = <IconData>[Icons.add_task, Icons.format_list_numbered_rtl_rounded];
+    final labels = ['New', 'Feedbacks'];
+    final iconList = <IconData>[Icons.add_comment, Icons.chat_outlined];
 
     return AnimatedBottomNavigationBar.builder(
       itemCount: iconList.length,
