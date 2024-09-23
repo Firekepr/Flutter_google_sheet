@@ -1,7 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:project_google_sheet/global.dart';
 import 'package:project_google_sheet/pages/formulary/formulary.dart';
 import 'package:project_google_sheet/pages/formulary_list/fomulary_list.dart';
 import 'package:project_google_sheet/pages/home/components/navigator_bar.dart';
+import 'package:project_google_sheet/service/google_sheet_service.dart';
+import 'package:project_google_sheet/utils/message_utils.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -15,11 +20,18 @@ class _MyHomePageState extends State<MyHomePage> {
   int _bottomNavIndex = 0;
 
   @override
+  void initState() {
+    loadingConsult();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Flutter google sheets'),
+        title: const Text('Flutter X Google Sheets'),
+        centerTitle: true,
       ),
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
@@ -48,5 +60,25 @@ class _MyHomePageState extends State<MyHomePage> {
     _bottomNavIndex = idx;
 
     setState(() {});
+  }
+
+  Future<Timer> loadingConsult() async {
+    return Timer.periodic(const Duration(seconds: 30), (timer) async {
+      Global.firstLoad = false;
+
+      final sheet = GoogleSheetService((String response) {
+        if (response == GoogleSheetService.STATUS_SUCCESS) {
+          setState(() {});
+        } else {
+          MessageUtils.modalError(context, "Error!");
+        }
+      });
+
+      await sheet.getDataFromGoogleSheet().then((value) => {
+        Global.loading = false,
+        Global.feedbacks = value,
+        setState(() {}),
+      });
+    });
   }
 }
