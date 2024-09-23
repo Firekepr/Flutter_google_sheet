@@ -41,7 +41,7 @@ class _FormularyListState extends State<FormularyList> {
   }
 
   Future<void> _getGoogleSheetsForms() async {
-    setState(() => forms = Global.feedbacks);
+    if (mounted) setState(() => forms = Global.feedbacks);
 
     final sheet = GoogleSheetService((String response) {
       if (response == GoogleSheetService.STATUS_SUCCESS) {
@@ -55,6 +55,6 @@ class _FormularyListState extends State<FormularyList> {
     loading = false;
     Global.firstLoad = false;
     Global.feedbacks = forms;
-    setState(() {});
+    if (mounted) setState(() {});
   }
 }
