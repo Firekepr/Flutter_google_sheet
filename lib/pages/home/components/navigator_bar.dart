@@ -19,7 +19,7 @@ class NavigatorBar extends StatelessWidget {
     return AnimatedBottomNavigationBar.builder(
       itemCount: iconList.length,
       tabBuilder: (int index, bool isActive) {
-        final color = isActive ? Colors.black : Colors.white;
+        final color = isActive ? Theme.of(context).scaffoldBackgroundColor : Theme.of(context).primaryColor;
 
         return Column(
           mainAxisSize: MainAxisSize.min,
