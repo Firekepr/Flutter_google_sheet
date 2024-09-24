@@ -48,6 +48,7 @@ class _CustomTextInputState extends State<CustomTextInput> {
         keyboardType: widget.inputType,
         maxLines: widget.maxLines,
         minLines: 1,
+        style: TextStyle(color: Theme.of(context).primaryColor),
         decoration: InputDecoration(
           filled: true,
           fillColor: Colors.blueGrey[300],
