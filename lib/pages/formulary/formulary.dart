@@ -5,7 +5,9 @@ import 'package:project_google_sheet/shared/custom_text_input.dart';
 import 'package:project_google_sheet/utils/message_utils.dart';
 
 class Formulary extends StatefulWidget {
-  const Formulary({super.key});
+  final void Function() reload;
+
+  const Formulary({super.key, required this.reload});
 
   @override
   State<Formulary> createState() => _FormularyState();
@@ -109,6 +111,7 @@ class _FormularyState extends State<Formulary> {
 
       await sheet.submitForm(feedBack);
       setState(() => loading = false);
+      widget.reload();
     }
   }
 }

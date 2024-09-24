@@ -42,9 +42,9 @@ class _MyHomePageState extends State<MyHomePage> {
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: controller,
-        children: const [
-          Formulary(),
-          FormularyList(),
+        children: [
+          Formulary(reload: _getList),
+          const FormularyList(),
         ],
       ),
       bottomNavigationBar: NavigatorBar(
@@ -71,20 +71,23 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<Timer> loadingConsult() async {
     return Timer.periodic(const Duration(seconds: 30), (timer) async {
       Global.firstLoad = false;
+      await _getList();
+    });
+  }
 
-      final sheet = GoogleSheetService((String response) {
-        if (response == GoogleSheetService.STATUS_SUCCESS) {
-          setState(() {});
-        } else {
-          MessageUtils.modalError(context, "Error!");
-        }
-      });
+  Future<void> _getList() async {
+    final sheet = GoogleSheetService((String response) {
+      if (response == GoogleSheetService.STATUS_SUCCESS) {
+        setState(() {});
+      } else {
+        MessageUtils.modalError(context, "Error!");
+      }
+    });
 
-      await sheet.getDataFromGoogleSheet().then((value) => {
-        Global.loading = false,
-        Global.feedbacks = value,
-        setState(() {}),
-      });
+    await sheet.getDataFromGoogleSheet().then((value) => {
+      Global.loading = false,
+      Global.feedbacks = value,
+      setState(() {}),
     });
   }
 }
