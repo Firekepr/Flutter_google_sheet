@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_google_sheet/model/FeedbackForm.dart';
 import 'package:project_google_sheet/service/google_sheet_service.dart';
+import 'package:project_google_sheet/shared/custom_text_input.dart';
 import 'package:project_google_sheet/utils/message_utils.dart';
 
 class Formulary extends StatefulWidget {
@@ -30,48 +30,50 @@ class _FormularyState extends State<Formulary> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextFormField(
+
+            CustomTextInput(
+              readOnly: loading,
               controller: nameController,
-              validator: (value) {
-                return value!.isEmpty ? 'Enter Valid Name' : null;
-              },
-              decoration: const InputDecoration(
-                hintText: 'name',
-              ),
+              hint: 'Name',
+              validator: 'Enter valid Name',
+              suffixIcon: Icons.person,
             ),
-            TextFormField(
+
+            CustomTextInput(
+              readOnly: loading,
               controller: emailController,
-              validator: (value) {
-                return value!.isEmpty ? 'Enter Valid email' : null;
-              },
-              decoration: const InputDecoration(
-                hintText: 'email',
-              ),
+              hint: 'E-mail',
+              validator: 'Enter valid e-mail',
+              suffixIcon: Icons.email,
+              inputType: TextInputType.emailAddress,
+              validators: (value) => !value.contains('@'),
+              margin: const EdgeInsets.only(top: 8.0),
             ),
-            TextFormField(
+
+            CustomTextInput(
+              readOnly: loading,
               controller: mobileNumberController,
-              validator: (value) {
-                return value!.isEmpty ? 'Enter Valid Number' : null;
-              },
-              decoration: const InputDecoration(
-                hintText: 'Mobile number',
-              ),
+              hint: 'Mobile number',
+              validator: 'Enter valid number',
+              suffixIcon: Icons.phone_iphone_rounded,
+              inputType: TextInputType.number,
+              margin: const EdgeInsets.only(top: 8.0),
             ),
-            TextFormField(
+
+            CustomTextInput(
+              readOnly: loading,
               controller: feedBackController,
-              validator: (value) {
-                return value!.isEmpty ? 'Enter Valid Feedback' : null;
-              },
-              decoration: const InputDecoration(
-                hintText: 'Feedback',
-              ),
+              hint: 'Feedback',
+              validator: 'Enter valid Feedback',
+              suffixIcon: Icons.chat,
+              margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
             ),
 
             Opacity(
               opacity: loading ? 0.5 : 1,
               child: ElevatedButton(
                 onPressed: loading ? null : onSubmit,
-                child: const Text('Save'),
+                child: Text('Send', style: TextStyle(color: Colors.indigo[800])),
               ),
             ),
           ],
