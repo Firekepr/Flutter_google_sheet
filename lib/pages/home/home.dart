@@ -30,7 +30,13 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Flutter X Google Sheets'),
+        title: Text(
+          'Flutter X Google Sheets',
+          style: TextStyle(
+            color: Theme.of(context).primaryColor,
+            fontWeight: FontWeight.bold,
+          )
+        ),
         centerTitle: true,
       ),
       body: PageView(
