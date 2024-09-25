@@ -6,7 +6,6 @@ import 'package:project_google_sheet/pages/formulary/formulary.dart';
 import 'package:project_google_sheet/pages/formulary_list/fomulary_list.dart';
 import 'package:project_google_sheet/pages/home/components/navigator_bar.dart';
 import 'package:project_google_sheet/service/google_sheet_service.dart';
-import 'package:project_google_sheet/utils/message_utils.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -37,9 +36,9 @@ class _MyHomePageState extends State<MyHomePage> {
             fontWeight: FontWeight.bold,
           )
         ),
-        centerTitle: controller.page! > 0,
+        centerTitle: true,
       ),
-      extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: _bottomNavIndex > 0,
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: controller,
@@ -71,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<Timer> loadingConsult() async {
     return Timer.periodic(const Duration(seconds: 30), (timer) async {
-      await _getList(false);
+      if (mounted) await _getList(false);
     });
   }
 
