@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_google_sheet/global.dart';
 import 'package:project_google_sheet/model/FeedbackForm.dart';
 import 'package:project_google_sheet/service/google_sheet_service.dart';
 import 'package:project_google_sheet/shared/custom_text_input.dart';
@@ -110,6 +111,7 @@ class _FormularyState extends State<Formulary> {
       });
 
       await sheet.submitForm(feedBack);
+      Global.firstLoad = true;
       setState(() => loading = false);
       widget.reload();
     }
