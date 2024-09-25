@@ -1,6 +1,11 @@
 # Flutter_google_sheet
 This project is to learn how save and get data in google sheets
 
+![before_save](https://github.com/user-attachments/assets/77d5326f-02ec-4d11-8a09-610b36ec5542)
+![after_save](https://github.com/user-attachments/assets/c11056f6-188e-4d29-ac59-bb10301a82fe)
+
+![google_sheet](https://github.com/user-attachments/assets/552333da-aba5-4be3-83b6-57b830ac90a3)
+
 # In google sheet codes use this (This method saves or gets the data based on the action) :
 > await http.get(URL + '?name=$name&email=$email&mobileNumber=$mobile_number&feedback=$feedBack&action=save');
 ```
