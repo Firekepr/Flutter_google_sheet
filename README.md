@@ -1,12 +1,20 @@
 # Flutter_google_sheet
-This project is to learn how save and get data in google sheets
+EN_US: A simple project that takes the value entered and saves it in a Google spreadsheet. It is possible to consult the value entered and other values ​​in a list. Below I teach you which code I use in Google to understand my requests.
+<br>
+<br>
+PT_BR: Um projeto simples que pega o valor inserido e salva em uma planilha do Google. É possível consultar o valor inserido e outros valores em uma lista. Abaixo ensino qual código utilizo no Google para entender minhas requisições.
 
 ![before_save](https://github.com/user-attachments/assets/77d5326f-02ec-4d11-8a09-610b36ec5542)
 ![after_save](https://github.com/user-attachments/assets/c11056f6-188e-4d29-ac59-bb10301a82fe)
 
 ![google_sheet](https://github.com/user-attachments/assets/552333da-aba5-4be3-83b6-57b830ac90a3)
 
-# In google sheet codes use this (This method saves or gets the data based on the action) :
+#  Code used in Google sheet:
+
+EN_US: These methods save or get the data based on the action 'field'
+<br>
+PR_BR: Estes metodos salvam ou pegam valores com base no campo 'action'
+
 > await http.get(URL + '?name=$name&email=$email&mobileNumber=$mobile_number&feedback=$feedBack&action=save');
 ```
 function doGet(request) {
