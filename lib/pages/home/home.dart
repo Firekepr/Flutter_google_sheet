@@ -37,8 +37,9 @@ class _MyHomePageState extends State<MyHomePage> {
             fontWeight: FontWeight.bold,
           )
         ),
-        centerTitle: true,
+        centerTitle: controller.page! > 0,
       ),
+      extendBodyBehindAppBar: true,
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: controller,

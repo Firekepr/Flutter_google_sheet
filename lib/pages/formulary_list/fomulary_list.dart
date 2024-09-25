@@ -19,7 +19,7 @@ class _FormularyListState extends State<FormularyList> {
 
   @override
   void initState() {
-    _getGoogleSheetsForms();
+    _getGoogleSheetsForms(false);
     super.initState();
   }
 
@@ -29,26 +29,47 @@ class _FormularyListState extends State<FormularyList> {
       child: Global.firstLoad
           ? const FormularyListLoader()
           : RefreshIndicator(
-              onRefresh: _getGoogleSheetsForms,
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: forms.length,
-                padding: const EdgeInsets.only(top: 4.0),
-                itemBuilder: (context, int idx) => FormularyListItem(item: forms[idx], idx: idx),
+              onRefresh: () =>  _getGoogleSheetsForms(true),
+              child: SizedBox(
+                height: forms.length < 4 ? MediaQuery.sizeOf(context).height : null,
+                child: _getBody(),
               ),
           ),
     );
   }
 
-  Future<void> _getGoogleSheetsForms() async {
+  Widget _getBody() {
+    if (forms.isEmpty) {
+      return Center(
+        child: Text(
+          ':(\nNo feedback yet',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Theme.of(context).primaryColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 22.0,
+          ),
+        ),
+      );
+    } else {
+      return ListView.builder(
+        shrinkWrap: true,
+        itemCount: forms.length,
+        padding: const EdgeInsets.only(top: 4.0),
+        itemBuilder: (context, int idx) => FormularyListItem(item: forms[idx], idx: idx),
+      );
+    }
+  }
+
+  Future<void> _getGoogleSheetsForms(bool refresh) async {
     if (mounted) setState(() => forms = Global.feedbacks);
-    if (!Global.firstLoad) return;
+    if (!refresh && !Global.firstLoad) return;
 
     final sheet = GoogleSheetService((String response) {
       if (response == GoogleSheetService.STATUS_SUCCESS) {
         setState(() {});
       } else {
-        MessageUtils.modalError(context, "Error!");
+        // MessageUtils.modalError(context, "Error!");
       }
     });
 
